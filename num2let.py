@@ -69,7 +69,7 @@ def split_number(number):
 
 
 def convert_number(number):
-    sign = 'moins ' if number[0] == '-' else ''
+    sign = 'moins ' if str(number)[0] == '-' else ''
 
     if number == '000':
         return ""
@@ -152,3 +152,6 @@ def convert(number, currency='', unit='centime'):
                f"{dispatch(number_parts[1])} {'' if currency == '' else unit}".strip()
     else:
         return f"{dispatch(number_parts)}{' '+currency if currency != '' else ''}".strip()
+
+if __name__ == '__main__':
+    print(convert(1223.23, "euro", "centime d'euro"))
