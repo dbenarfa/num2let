@@ -66,3 +66,46 @@ def split_number(number):
     else:
         first_part = list(map(int, f"{number:_}".split('_')))
         return first_part
+
+
+def convert_number(number):
+    sign = 'moins ' if number[0] == '-' else ''
+
+    if number == '000':
+        return ""
+
+    got_zero = ''
+    # if len(number) > 1:
+    #     for n in number:
+    #         if n == '0':
+    #             got_zero += "zero "
+    #         else:
+    #             break
+    # print(got_zero)
+
+    number = str(abs(int(number)))
+    if int(number) <= 16:
+        return f"{sign}{got_zero}{numbers_less_17[number]}"
+    elif int(number) > 99:
+        hundreds = numbers_less_17[int(str(number)[0])] if int(str(number)[0]) > 1 else ""
+        if int(str(number)[1:]) > 0:
+            return f"{sign}{got_zero}{hundreds} {cent_label} {convert_number(str(number)[1:])}"
+        else:
+            return f"{sign}{got_zero}{hundreds} {cent_label}"
+    else:
+        # Prennent un trait d'union tous les nombres composés inférieurs à 100 ne se terminant pas en 1 sauf 81 et 91
+        if number[0] in ('8', '9') or number[1] != '1':
+            separator = "-"
+        elif number[1] == '1':
+            separator = f" {et_label} "
+        else:
+            separator = ' '
+        if number[0] in ("7", "9") and number[1] != 0:
+            return f"{sign}{got_zero}{dix[int(number[0])-1]}{separator}" \
+                   f"{convert_number(str(int(number[1])+10))}"
+
+        if int(number[1]) == 0:
+            return f"{sign}{got_zero}{dix[int(number[0])]}"
+        else:
+            return f"{sign}{got_zero}{dix[int(number[0])]}{separator}" \
+                   f"{numbers_less_17[int(number[1])]}"
