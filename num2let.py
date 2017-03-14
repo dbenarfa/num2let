@@ -142,3 +142,13 @@ def dispatch(numbers_list):
         return f"{convert_number(numbers_list[0])}"
     else:
         return far_number
+
+
+def convert(number, currency='', unit='centime'):
+    number_parts = split_number(number)
+
+    if isinstance(number_parts, tuple):
+        return f"{dispatch(number_parts[0])}{' '+vergule_label+' ' if currency == '' else ' '+currency+' '+et_label+' '}" \
+               f"{dispatch(number_parts[1])} {'' if currency == '' else unit}".strip()
+    else:
+        return f"{dispatch(number_parts)}{' '+currency if currency != '' else ''}".strip()
