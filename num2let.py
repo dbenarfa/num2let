@@ -109,3 +109,36 @@ def convert_number(number):
         else:
             return f"{sign}{got_zero}{dix[int(number[0])]}{separator}" \
                    f"{numbers_less_17[int(number[1])]}"
+
+def dispatch(numbers_list):
+    global billiard_label, billion_label, milliard_label, million_label, mille_label
+
+    if len(numbers_list) == 6:
+        # Billion
+        return f"{convert_number(numbers_list[0])} {billiard_label} {dispatch(numbers_list[1:])}"
+    elif len(numbers_list) == 5:
+        # Billion
+        if float(numbers_list[0]) == 0:
+            billion_label = ""
+        return f"{convert_number(numbers_list[0])} {billion_label} {dispatch(numbers_list[1:])}"
+    elif len(numbers_list) == 4:
+        # Milliard
+        if float(numbers_list[0]) == 0:
+            milliard_label = ""
+        return f"{convert_number(numbers_list[0])} {milliard_label} {dispatch(numbers_list[1:])}"
+    elif len(numbers_list) == 3:
+        # Million
+        if float(numbers_list[0]) == 0:
+            million_label = ""
+        return f"{convert_number(numbers_list[0])} {million_label} {dispatch(numbers_list[1:])}"
+    elif len(numbers_list) == 2:
+    # Mille
+        if float(numbers_list[0]) == 0:
+            mille_label = ""
+        thousand = convert_number(numbers_list[0]) if float(numbers_list[0]) > 1 else ""
+        return f"{thousand}{mille_label+' ' if mille_label !='' else ''}{dispatch(numbers_list[1:])}"
+    elif len(numbers_list) == 1:
+        # Cent
+        return f"{convert_number(numbers_list[0])}"
+    else:
+        return far_number
